@@ -1,0 +1,187 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background-color: #0F1215; /* Темный фон вокруг мобильного экрана */
+    display: flex;
+    justify-content: center;
+}
+
+#root {
+    width: 100%;
+    max-width: 390px; /* Мобильная ширина */
+    height: 100vh;
+    background-color: #FFFFFF;
+    position: relative;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Нижняя навигация ===== */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 390px;
+    height: 64px;
+    background-color: #1F2429;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #374151;
+    z-index: 100;
+}
+
+.bottom-nav a, .bottom-nav span {
+    color: #9CA3AF;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.bottom-nav a.active {
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
+.bottom-nav span.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* ===== Лента (Reels) ===== */
+.feed-container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background-color: #000;
+}
+
+.feed-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.feed-overlay-info {
+    position: absolute;
+    bottom: 80px;
+    left: 16px;
+    right: 80px;
+    color: #FFFFFF;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.feed-overlay-actions {
+    position: absolute;
+    bottom: 90px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.action-btn {
+    background: rgba(31, 36, 41, 0.85);
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 14px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+}
+
+.action-btn:hover {
+    background: #374151;
+}
+
+/* ===== Плитка (Каталог) ===== */
+.grid-container {
+    padding: 16px;
+    padding-bottom: 80px; /* Чтобы меню не перекрывало контент */
+}
+
+.grid-container h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: #1F2429;
+}
+
+.filter-form {
+    margin-bottom: 16px;
+}
+
+.filter-form input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #E2E5E9;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.grid-card {
+    background-color: #F4F5F7;
+    border: 1px solid #E2E5E9;
+    border-radius: 6px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: border-color 0.2s;
+    cursor: pointer;
+}
+
+.grid-card:hover {
+    border-color: #1F2429;
+}
+
+.card-img {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+}
+
+.card-details {
+    padding: 10px;
+}
+
+.card-details h4 {
+    font-size: 13px;
+    margin-bottom: 4px;
+    color: #1F2429;
+    font-weight: bold;
+}
+
+.card-param {
+    font-size: 12px;
+    color: #6B7280;
+}
+
+.card-likes {
+    font-size: 11px;
+    color: #6B7280;
+    margin-top: 4px;
+}
