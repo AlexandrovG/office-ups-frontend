@@ -1,48 +1,62 @@
-import { FC, useState } from "react";
-import { useOutletContext, useNavigate } from "react-router-dom";
-import type { UpsItem } from "../mock";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch, RootState } from '../store';
+import { fetchUpsList, setFilterMin } from '../slices/upsSlice';
+import { Card, Col, Row, Form, Spinner, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-export const GridPage: FC = () => {
-  const { cards } = useOutletContext<{ cards: UpsItem[] }>();
-  const [minCapacity, setMinCapacity] = useState<number>(0);
+export const GridPage = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { items, loading, filterMinCapacity } = useSelector((state: RootState) => state.ups);
   const navigate = useNavigate();
 
-  const filtered = cards.filter(c => c.capacity >= minCapacity);
+  useEffect(() => {
+    dispatch(fetchUpsList());
+  }, [dispatch]);
+
+  const handleFilterChange = (e: any) => {
+    dispatch(setFilterMin(Number(e.target.value)));
+  };
 
   return (
-    <div className="grid-container">
-      <h3>Каталог ИБП</h3>
-      
-      <div className="filter-form">
-        <input 
+    <div className="p-3">
+      <h4 className="mb-3">Каталог ИБП</h4>
+      <Form.Group className="mb-3 d-flex gap-2">
+        <Form.Control 
           type="number" 
+          value={filterMinCapacity || ''} 
+          onChange={handleFilterChange} 
           placeholder="Мин. ёмкость (А·ч)"
-          value={minCapacity || ''} 
-          onChange={(e) => setMinCapacity(Number(e.target.value))} 
         />
-      </div>
+        <Button variant="primary" onClick={() => dispatch(fetchUpsList())}>Поиск</Button>
+      </Form.Group>
 
-      <div className="cards-grid">
-        {filtered.map(card => (
-          <div 
-            key={card.id} 
-            className="grid-card" 
-            onClick={() => navigate(`/detail/${card.id}`)}
-          >
-            <img 
-              src={card.image_url || "/default.png"} 
-              alt={card.ups_name} 
-              className="card-img" 
-            />
-            <div className="card-details">
-              <h4>{card.ups_name}</h4>
-              <div className="card-param">{card.capacity} А·ч</div>
-              <div className="card-likes">♥ {card.likes_count}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-      {!filtered.length && <p style={{ textAlign: 'center', marginTop: 20 }}>Ничего не найдено</p>}
+      {loading ? (
+        <div className="text-center mt-5"><Spinner animation="border" /></div>
+      ) : (
+        <Row xs={2} className="g-2">
+          {items.map(card => (
+            <Col key={card.id}>
+              <Card onClick={() => navigate(`/detail/${card.id}`)} style={{ cursor: 'pointer' }}>
+                <Card.Img 
+                  variant="top" 
+                  src={card.image_url || "/no-image.png"} 
+                  onError={(e) => {
+                    e.currentTarget.src = "/no-image.png";
+                  }}
+                  style={{ height: 120, objectFit: "cover" }} 
+                />
+                <Card.Body className="p-2">
+                  <Card.Title style={{ fontSize: 14 }}>{card.ups_name}</Card.Title>
+                  <Card.Text className="mb-0" style={{ fontSize: 12 }}>
+                    {card.capacity} А·ч
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      )}
     </div>
   );
 };

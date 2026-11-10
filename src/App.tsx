@@ -3,6 +3,7 @@ import { AppLayout } from "./components/AppLayout";
 import { FeedPage } from "./pages/FeedPage";
 import { GridPage } from "./pages/GridPage";
 import { DetailPage } from "./pages/DetailPage";
+import { AddPage } from "./pages/AddPage";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<FeedPage />} />
           <Route path="/grid" element={<GridPage />} />
           <Route path="/detail/:id" element={<DetailPage />} />
+          <Route path="/add" element={<AddPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

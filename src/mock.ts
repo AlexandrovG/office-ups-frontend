@@ -1,6 +1,7 @@
 export interface UpsAttribute {
+  id: number;
   name: string;
-  value: string;
+  value: string; 
 }
 
 export interface UpsItem {
@@ -19,43 +20,30 @@ export const MOCK_DATA: UpsItem[] = [
   {
     id: 1,
     ups_name: "ИБП APC Smart-UPS 1500",
-    description: "Линейно-интерактивный ИБП для офиса. Обеспечивает надежную защиту серверов и рабочего оборудования от перепадов напряжения.",
+    description: "Линейно-интерактивный ИБП для офиса",
     capacity: 1500,
     max_current: 10,
     image_url: "", 
-    video_url: "/default.mp4",
+    video_url: "",
     likes_count: 3,
     attributes: [
-      { name: "Производитель", value: "APC" },
-      { name: "Тип", value: "Линейно-интерактивный" },
-      { name: "Время автономии", value: "15 мин" }
+      { id: 1, name: "Производитель", value: "APC" },
+      { id: 2, name: "Тип", value: "Линейно-интерактивный" },
+      { id: 3, name: "Гарантия", value: "24 месяца" }
     ]
   },
   {
     id: 2,
     ups_name: "ИБП CyberPower OLS2000",
-    description: "Онлайн-ИБП с двойным преобразованием.",
+    description: "Онлайн-ИБП с двойным преобразованием",
     capacity: 2000,
     max_current: 8,
-    image_url: "https://picsum.photos/400/300", 
+    image_url: "", 
     video_url: "",
     likes_count: 1,
     attributes: [
-      { name: "Производитель", value: "CyberPower" },
-      { name: "Тип", value: "Онлайн" }
-    ]
-  },
-  {
-    id: 3,
-    ups_name: "ИБП Ippon Innova RT 1000",
-    description: "Для серверных стоек.",
-    capacity: 1000,
-    max_current: 6,
-    image_url: "",
-    video_url: "",
-    likes_count: 5,
-    attributes: [
-      { name: "Производитель", value: "Ippon" }
+      { id: 1, name: "Производитель", value: "CyberPower" },
+      { id: 2, name: "Тип", value: "" }, // Пустое
     ]
   }
 ];

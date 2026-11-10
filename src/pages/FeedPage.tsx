@@ -1,19 +1,31 @@
-import { FC, useState } from "react";
-import { useOutletContext } from "react-router-dom";
-import type { UpsItem } from "../mock";
+import { FC, useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState, AppDispatch } from '../store';
+import { fetchUpsList } from '../slices/upsSlice';
 
 export const FeedPage: FC = () => {
-  const { cards } = useOutletContext<{ cards: UpsItem[] }>();
+  const dispatch = useDispatch<AppDispatch>();
+  
+
+  const { items } = useSelector((state: RootState) => state.ups);
+  
   const [index, setIndex] = useState(0);
   const [liked, setLiked] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
-  const item = cards[index];
 
-  if (!item) return <div>Нет данных</div>;
+  useEffect(() => {
+    if (items.length === 0) {
+      dispatch(fetchUpsList());
+    }
+  }, [dispatch, items.length]);
+
+  const item = items[index];
+
+  if (!item) return <div className="p-3">Загрузка...</div>;
 
   const handleNext = () => {
-    setIndex((prev) => (prev + 1) % cards.length);
+    setIndex((prev) => (prev + 1) % items.length);
     setExpanded(false);
     setLiked(false);
   };
@@ -24,8 +36,9 @@ export const FeedPage: FC = () => {
         <video src={item.video_url} autoPlay loop muted playsInline className="feed-video" />
       ) : (
         <img 
-          src={item.image_url || "/default.png"} 
+          src={item.image_url || "/no-image.png"} 
           alt={item.ups_name} 
+          onError={(e) => { e.currentTarget.src = "/no-image.png"; }}
           className="feed-video" 
         />
       )}
